@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COMPUTER SCIENCE</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    #timer, #stopwatch {
+        font-size: 108px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+<h1>AGE AND TIME WASTED</h1>
+<div id="timer">0</div>
+<div id="stopwatch">0</div>
+
+<script>
+    // Timer
+    let startTimestamp = new Date('2007-11-18T02:50:00').getTime(); // Start timestamp for the timer
+    setInterval(updateTimer, 1);
+
+    function updateTimer() {
+        const currentTimestamp = new Date().getTime();
+        const elapsedMilliseconds = currentTimestamp - startTimestamp;
+        const elapsedYears = elapsedMilliseconds / (1000 * 60 * 60 * 24 * 365.25);
+
+        // Display the timer
+        document.getElementById("timer").innerText = elapsedYears.toFixed(8);
+    }
+
+    // Stopwatch
+    let stopwatchStart = null;
+    let stopwatchInterval = null;
+
+    function startStopwatch() {
+        stopwatchStart = Date.now();
+        stopwatchInterval = setInterval(updateStopwatch, 1);
+    }
+
+    function stopStopwatch() {
+        clearInterval(stopwatchInterval);
+    }
+
+    function resetStopwatch() {
+        clearInterval(stopwatchInterval);
+        document.getElementById("stopwatch").innerText = "0";
+    }
+
+    function updateStopwatch() {
+        const currentTime = Date.now();
+        const elapsedTime = currentTime - stopwatchStart;
+        const elapsedSeconds = elapsedTime / 1000; // Convert milliseconds to seconds
+        const elapsedMilliseconds = parseFloat(document.getElementById("timer").innerText) * (1000 * 60 * 60 * 24 * 365.25);
+        const percentage = (elapsedSeconds / (elapsedMilliseconds / 1000)) * 100;
+        document.getElementById("stopwatch").innerText = elapsedSeconds.toFixed(3) + " s";
+        document.getElementById("stopwatch").innerText += " (" + percentage.toFixed(8) + "%)";
+    }
+</script>
+
+<button onclick="startStopwatch()">YAP START</button>
+<button onclick="stopStopwatch()">YAP FINISH</button>
+<button onclick="resetStopwatch()">RESET YAPPING</button>
+
+</body>
+</html>
